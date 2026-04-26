@@ -1,0 +1,10 @@
+{
+  "name": "easy_one_obstacle",
+  "description": "Single circular obstacle in middle.",
+  "bounds": [[0, 10], [0, 10]],
+  "start": [1, 5],
+  "goal": [9, 5],
+  "obstacles": [
+    {"center": [5, 5.6], "radius": 1.0}
+  ]
+}

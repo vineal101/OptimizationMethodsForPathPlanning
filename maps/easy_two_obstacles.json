@@ -1,0 +1,11 @@
+{
+  "name": "easy_two_obstacles",
+  "description": "Two obstacles offset from straight-line path.",
+  "bounds": [[0, 10], [0, 10]],
+  "start": [1, 1],
+  "goal": [9, 9],
+  "obstacles": [
+    {"center": [4, 3], "radius": 0.8},
+    {"center": [6, 7], "radius": 0.8}
+  ]
+}
