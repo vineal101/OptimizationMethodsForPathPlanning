@@ -9,7 +9,8 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.map_env import MapEnv
-from src.gradient_descent import plan
+from src.gradient_descent import plan as gd_plan
+from src.accelerated_gradient_descent import plan as agd_plan
 
 MAPS_DIR = os.path.join(os.path.dirname(__file__), "..", "maps")
 OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "results")
@@ -33,14 +34,23 @@ def plot(env, path, success, name):
 
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
-    maps = ["easy_open.json", "easy_one_obstacle.json", "easy_two_obstacles.json"]
-    for m in maps:
-        name = m.replace(".json", "")
-        env = MapEnv.from_json(os.path.join(MAPS_DIR, m))
-        path, success, iters = plan(env)
-        print(f"{name}: success={success}, iters={iters}, end={path[-1]}")
-        plot(env, path, success, name)
 
+    maps = ["easy_open.json", "easy_one_obstacle.json", "easy_two_obstacles.json"]
+
+    planners = {
+        "gd": gd_plan,
+        "agd": agd_plan,
+    }
+
+    for m in maps:
+        env_name = m.replace(".json", "")
+        env = MapEnv.from_json(os.path.join(MAPS_DIR, m))
+        for planner_name, plan in planners.items():
+            name = f"{env_name}_{planner_name}"
+            path, success, iters = plan(env, t0=0.05, alpha=1e-4, beta=0.5, max_iter=2000, tol=0.05, d0=2.0)
+
+            print(f"{name}: success={success}, iters={iters}, end={path[-1]}")
+            plot(env, path, success, name)
 
 if __name__ == "__main__":
     main()
