@@ -2,7 +2,6 @@ import os
 import sys
 
 import matplotlib
-
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -45,11 +44,10 @@ def main():
     for m in maps:
         env_name = m.replace(".json", "")
         env = MapEnv.from_json(os.path.join(MAPS_DIR, m))
+
         for planner_name, plan in planners.items():
             name = f"{env_name}_{planner_name}"
-            path, success, iters = plan(
-                env, t0=1.0, alpha=1e-4, beta=0.5, max_iter=2000, tol=0.05, d0=1.5
-            )
+            path, success, iters = plan(env, t0=0.01, alpha=1e-4, beta=0.5, max_iter=2000, tol=0.05, d0=1.5, max_move=1000)
 
             print(f"{name}: success={success}, iters={iters}, end={path[-1]}")
             plot(env, path, success, name)
