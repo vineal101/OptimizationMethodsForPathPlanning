@@ -34,7 +34,17 @@ def plot(env, path, success, name):
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
 
-    maps = ["easy_open.json", "easy_one_obstacle.json", "easy_two_obstacles.json"]
+    maps = [
+        "easy_1.json",
+        "easy_2.json",
+        "easy_3.json",
+        "medium_1.json",
+        "medium_2.json",
+        "medium_3.json",
+        "hard_1.json",
+        "hard_2.json",
+        "hard_3.json",
+    ]
 
     planners = {
         "gd": gd_plan,
@@ -47,7 +57,7 @@ def main():
 
         for planner_name, plan in planners.items():
             name = f"{env_name}_{planner_name}"
-            path, success, iters = plan(env, t0=0.01, alpha=1e-4, beta=0.5, max_iter=2000, tol=0.05, d0=1.5, max_move=1000)
+            path, success, iters = plan(env, t0=0.015, alpha=1e-4, beta=0.5, max_iter=3000, tol=0.05, d0=1.5, max_move=10000)
 
             print(f"{name}: success={success}, iters={iters}, end={path[-1]}")
             plot(env, path, success, name)
