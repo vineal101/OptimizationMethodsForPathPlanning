@@ -2,9 +2,9 @@ import os
 import sys
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -47,10 +47,13 @@ def main():
         env = MapEnv.from_json(os.path.join(MAPS_DIR, m))
         for planner_name, plan in planners.items():
             name = f"{env_name}_{planner_name}"
-            path, success, iters = plan(env, t0=0.05, alpha=1e-4, beta=0.5, max_iter=2000, tol=0.05, d0=2.0)
+            path, success, iters = plan(
+                env, t0=1.0, alpha=1e-4, beta=0.5, max_iter=2000, tol=0.05, d0=1.5
+            )
 
             print(f"{name}: success={success}, iters={iters}, end={path[-1]}")
             plot(env, path, success, name)
+
 
 if __name__ == "__main__":
     main()
