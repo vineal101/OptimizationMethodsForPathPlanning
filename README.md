@@ -17,5 +17,5 @@ pip install -r requirements.txt
 python scripts/test_path_planning.py
 ```
 
-## Methods (planned)
-gradient descent, GD + momentum, Newton, quasi-Newton (BFGS), augmented Lagrangian
+## Methods 
+gradient descent, GD + momentum (Accelerated GD), Newton, quasi-Newton (BFGS), augmented Lagrangian
